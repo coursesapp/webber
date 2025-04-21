@@ -1,3 +1,13 @@
+/*
+this file contain add grid item i want to add basic CRUD and other functions
+-- we want comand for add demo grid item --
+-- we want command for edit grid item --
+-- we want command for delete grid item --
+-- we want command for delete grid item --
+
+** we can make a lot of types of default grid items to choose from , it just send its type **
+*/
+
 import { Command } from './Command.js';
 
 export class AddGridItemCommand extends Command {
