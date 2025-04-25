@@ -95,4 +95,83 @@ export class ChildGrid {
       throw new Error("Invalid breakpoint");
     }
   }
+
+  // grid to  tailwind 
+  generateTailwind() {
+    const classes = [];
+    const VALID_BREAKPOINTS = ["default", "sm", "md", "lg", "xl", "xl2"];
+  
+    VALID_BREAKPOINTS.forEach((breakpoint) => {
+      const styles = this.grid[breakpoint];
+      if (!styles) return;
+  
+      const prefix =
+        breakpoint === "default"
+          ? ""
+          : breakpoint === "xl2"
+          ? "2xl:"
+          : `${breakpoint}:`;
+  
+      // Columns
+      if (styles.columns) {
+        if (styles.columns.span) {
+          if (styles.columns.span === "full") {
+            classes.push(`${prefix}col-span-full`);
+          } else if (styles.columns.span !== "auto") {
+            classes.push(`${prefix}col-span-${styles.columns.span}`);
+          }
+        }
+        if (styles.columns.start && styles.columns.start !== "auto") {
+          classes.push(`${prefix}col-start-${styles.columns.start}`);
+        }
+        if (styles.columns.end && styles.columns.end !== "auto") {
+          classes.push(`${prefix}col-end-${styles.columns.end}`);
+        }
+      }
+  
+      // Rows
+      if (styles.rows) {
+        if (styles.rows.span) {
+          if (styles.rows.span === "full") {
+            classes.push(`${prefix}row-span-full`);
+          } else if (styles.rows.span !== "auto") {
+            classes.push(`${prefix}row-span-${styles.rows.span}`);
+          }
+        }
+        if (styles.rows.start && styles.rows.start !== "auto") {
+          classes.push(`${prefix}row-start-${styles.rows.start}`);
+        }
+        if (styles.rows.end && styles.rows.end !== "auto") {
+          classes.push(`${prefix}row-end-${styles.rows.end}`);
+        }
+      }
+  
+      // Align Self
+      if (styles.align && styles.align !== "auto") {
+        classes.push(`${prefix}self-${styles.align}`);
+      }
+  
+      // Justify Self
+      if (styles.justify && styles.justify !== "auto") {
+        classes.push(`${prefix}justify-self-${styles.justify}`);
+      }
+  
+      // Order
+      if (styles.order && styles.order !== "0") {
+        if (styles.order === "first") {
+          classes.push(`${prefix}-order-first`);
+        } else if (styles.order === "last") {
+          classes.push(`${prefix}order-last`);
+        } else if (styles.order === "none") {
+          classes.push(`${prefix}order-none`);
+        } else {
+          classes.push(`${prefix}order-${styles.order}`);
+        }
+      }
+    });
+  
+    return classes.join(" ");
+  }
+
+
 }

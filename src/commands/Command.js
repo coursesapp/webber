@@ -12,6 +12,10 @@ So focus only on making the result here
 -- Then we scale it manipulate page data , backend serves , make routers(navigation) --
 -- first make sure the ui is ok --> the scale it --> then go to services in clear mind 😊 -- 
 -- i think commands can take three days to complete --
+1- add grid item 
+2- delete grid item 
+3- update grid item (grid options only)
+
 */
 export class Command {
     execute() {}

@@ -97,5 +97,91 @@ export class GridItem {
       throw new Error("Invalid breakpoint");
     }
   }
+
+
+  // generate grid tailwind 
+  generateTailwind() {
+    const classes = [];
+    const VALID_BREAKPOINTS = ["default", "sm", "md", "lg", "xl", "xl2"];
+  
+    VALID_BREAKPOINTS.forEach((breakpoint) => {
+      const styles = this.grid[breakpoint];
+      if (!styles) return;
+  
+      const prefix =
+        breakpoint === "default"
+          ? ""
+          : breakpoint === "xl2"
+          ? "2xl:"
+          : `${breakpoint}:`;
+  
+      // Grid Template Columns
+      if (styles.columns) {
+        classes.push(`${prefix}grid-cols-${styles.columns}`);
+      }
+  
+      // Grid Template Rows
+      if (styles.rows) {
+        classes.push(`${prefix}grid-rows-${styles.rows}`);
+      }
+  
+      // Grid Gap
+      if (styles.gap) {
+        if (styles.gap.x && styles.gap.y) {
+          classes.push(`${prefix}gap-x-[${styles.gap.x}]`);
+          classes.push(`${prefix}gap-y-[${styles.gap.y}]`);
+        }
+      }
+  
+      // Grid Auto Flow
+      if (styles.flow) {
+        const flowMap = {
+          row: "grid-flow-row",
+          col: "grid-flow-col",
+          "row-dense": "grid-flow-row-dense",
+          "col-dense": "grid-flow-col-dense",
+        };
+        classes.push(`${prefix}${flowMap[styles.flow]}`);
+      }
+  
+      // Justify Items
+      if (styles.justify_items) {
+        classes.push(`${prefix}justify-items-${styles.justify_items}`);
+      }
+  
+      // Align Items
+      if (styles.items) {
+        classes.push(`${prefix}items-${styles.items}`);
+      }
+  
+      // Justify Content
+      if (styles.justify) {
+        const justifyMap = {
+          start: "justify-start",
+          end: "justify-end",
+          center: "justify-center",
+          between: "justify-between",
+          around: "justify-around",
+          evenly: "justify-evenly",
+        };
+        classes.push(`${prefix}${justifyMap[styles.justify]}`);
+      }
+  
+      // Align Content
+      if (styles.content) {
+        const contentMap = {
+          start: "content-start",
+          end: "content-end",
+          center: "content-center",
+          between: "content-between",
+          around: "content-around",
+          evenly: "content-evenly",
+        };
+        classes.push(`${prefix}${contentMap[styles.content]}`);
+      }
+    });
+  
+    return classes.join(" ");
+  }
   
 }
